@@ -1,0 +1,39 @@
+/*C32*/SET SCHEMA PUBLIC
+SET SCHEMA "PUBLIC"
+CREATE TABLE events(\u000d\u000a        id varchar(255) not null primary key,\u000d\u000a        title varchar(255) not null,\u000d\u000a        details varchar(255) not null,\u000d\u000a        slug varchar(255) not null,\u000d\u000a        maximum_attendees integer not null\u000d\u000a   )
+INSERT INTO "flyway_schema_history" VALUES(1,'1','create-table-events','SQL','V1__create-table-events.sql',1208345848,'SA','2024-04-02 10:16:55.407228',45,'1')
+COMMIT
+SET SCHEMA "PUBLIC"
+create table attendees(\u000d\u000a    id varchar(255) not null primary key ,\u000d\u000a    name varchar(255) not null,\u000d\u000a    email varchar(255) not null ,\u000d\u000a    event_id varchar(255) not null,\u000d\u000a    created_at timestamp default current_timestamp,\u000d\u000a    constraint attendees_event_id_fkey foreign key(event_id) references events(id) on delete restrict on update cascade\u000d\u000a)
+INSERT INTO "flyway_schema_history" VALUES(2,'2','create-table-attendees','SQL','V2__create-table-attendees.sql',176823739,'SA','2024-04-02 10:16:55.439213',5,'1')
+COMMIT
+SET SCHEMA "PUBLIC"
+create table check_ins(\u000d\u000a    id integer not null primary key identity,\u000d\u000a    created_at timestamp default current_timestamp,\u000d\u000a    attendee_id varchar(255) not null,\u000d\u000a    constraint check_ins_attendee_id_fkey foreign key(attendee_id) references attendees (id) on delete restrict on update cascade\u000d\u000a)
+INSERT INTO "flyway_schema_history" VALUES(3,'3','create-table-checkins','SQL','V3__create-table-checkins.sql',1772289018,'SA','2024-04-02 10:16:55.460199',3,'1')
+COMMIT
+SET SCHEMA "PUBLIC"
+create unique index events_slug_key on events(slug)
+create unique index attendees_event_id_email_key on attendees(event_id, email)
+CREATE UNIQUE INDEX check_ins_attendee_id_key ON check_ins(attendee_id)
+INSERT INTO "flyway_schema_history" VALUES(4,'4','create-table-indexes','SQL','V4__create-table-indexes.sql',-1159500007,'SA','2024-04-02 10:16:55.478188',2,'1')
+COMMIT
+SET SCHEMA "PUBLIC"
+DISCONNECT
+/*C33*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C34*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C35*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C36*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C37*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C38*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C39*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C40*/SET SCHEMA PUBLIC
+DISCONNECT
+/*C41*/SET SCHEMA PUBLIC
+DISCONNECT
